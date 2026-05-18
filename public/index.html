@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAN À LOMÉ 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">CAN <em>À</em> LOMÉ</div>
+  <ul class="nav-links">
+    <li><a href="#accueil">Accueil</a></li>
+    <li><a href="#equipes">Équipes</a></li>
+    <li><a href="#tickets">Tickets & Stands</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="/admin" class="nav-admin">Admin ↗</a>
+</nav>
+
+<!-- HERO -->
+<section id="accueil">
+  <div class="hero-noise"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-line"></div>
+
+  <div class="hero-eyebrow">⬥ Événement Étudiant Officiel · Lomé, Togo ⬥</div>
+  <h1 class="hero-title">
+    <span class="t1">CAN</span>
+    <span class="t2">À LOMÉ</span>
+    <span class="t3">2026</span>
+  </h1>
+  <div class="hero-divider"></div>
+  <p class="hero-sub">La grande compétition footballistique inter-équipes étudiante. Passion, excellence, fierté africaine.</p>
+  <div class="hero-ctas">
+    <a href="#tickets" class="btn-gold">Prendre un ticket</a>
+    <a href="#equipes" class="btn-ghost">Voir les équipes</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num" id="stat-teams">—</span>
+      <span class="stat-label">Équipes</span>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat">
+      <span class="stat-num" id="stat-matches">—</span>
+      <span class="stat-label">Matchs</span>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat">
+      <span class="stat-num">3</span>
+      <span class="stat-label">Semaines</span>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span>Découvrir</span>
+  </div>
+</section>
+
+<!-- EQUIPES -->
+<section id="equipes">
+  <div class="equipes-inner">
+    <div class="equipes-header">
+      <span class="section-label">⬥ Participants</span>
+      <h2 class="section-title">Les <em>Équipes</em></h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="teams-grid" id="teams-grid">
+      <div class="loading-placeholder">Chargement…</div>
+    </div>
+    <span class="planning-label">⬥ Planning des Rencontres</span>
+    <div class="match-list" id="match-list">
+      <div class="loading-placeholder loading-placeholder--padded">Chargement…</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKETS & STANDS -->
+<section id="tickets">
+  <div class="tickets-inner">
+    <div class="tickets-header">
+      <span class="section-label">⬥ Billetterie</span>
+      <h2 class="section-title">Tickets & <em>Stands</em></h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="tickets-grid">
+      <!-- Standard -->
+      <div class="ticket-card">
+        <div class="ticket-ornament">⬥ Entrée</div>
+        <div class="ticket-name">Tribune Standard</div>
+        <div class="ticket-price">500</div>
+        <div class="ticket-currency">FCFA par match</div>
+        <div class="ticket-divider"></div>
+        <ul class="ticket-features">
+          <li><span class="ticket-check">◆</span> Accès tous les matchs de groupe</li>
+          <li><span class="ticket-check">◆</span> Place en tribune générale</li>
+          <li><span class="ticket-check">◆</span> Programme de l'événement</li>
+        </ul>
+        <button class="btn-reserve" onclick="openTicketModal('Tribune Standard', 500)">Réserver</button>
+      </div>
+      <!-- VIP -->
+      <div class="ticket-card featured">
+        <div class="ticket-featured-badge">Populaire</div>
+        <div class="ticket-ornament">⬥ Premium</div>
+        <div class="ticket-name">Tribune VIP</div>
+        <div class="ticket-price">1 500</div>
+        <div class="ticket-currency">FCFA · accès complet</div>
+        <div class="ticket-divider"></div>
+        <ul class="ticket-features">
+          <li><span class="ticket-check">◆</span> Accès tous matchs + Finale</li>
+          <li><span class="ticket-check">◆</span> Place VIP vue privilégiée</li>
+          <li><span class="ticket-check">◆</span> Boisson offerte à chaque match</li>
+          <li><span class="ticket-check">â—†</span> Badge & programme souvenir</li>
+        </ul>
+        <button class="btn-reserve primary" onclick="openTicketModal('Tribune VIP', 1500)">Réserver</button>
+      </div>
+      <!-- Finale -->
+      <div class="ticket-card">
+        <div class="ticket-ornament">⬥ Finale</div>
+        <div class="ticket-name">Pass Finale</div>
+        <div class="ticket-price">800</div>
+        <div class="ticket-currency">FCFA · finale uniquement</div>
+        <div class="ticket-divider"></div>
+        <ul class="ticket-features">
+          <li><span class="ticket-check">◆</span> Accès à la Grande Finale</li>
+          <li><span class="ticket-check">â—†</span> Place prioritaire</li>
+          <li><span class="ticket-check">â—†</span> Programme de la Finale</li>
+        </ul>
+        <button class="btn-reserve" onclick="openTicketModal('Pass Finale', 800)">Réserver</button>
+      </div>
+    </div>
+
+    <!-- Stands -->
+    <div class="stands-title">Réserver un <em>Stand</em></div>
+    <div class="stands-grid" id="stands-grid">
+      <div class="loading-placeholder">Chargement…</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <span class="section-label">⬥ Nous contacter</span>
+      <h2 class="section-title">Contact & <em>Inscription</em></h2>
+      <div class="section-rule"></div>
+      <div class="contact-info-items">
+        <div class="contact-item">
+          <div class="contact-icon-wrap">📍</div>
+          <div>
+            <div class="contact-item-title">Lieu</div>
+            <div class="contact-item-val">Lomé, Togo</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon-wrap">✉️</div>
+          <div>
+            <div class="contact-item-title">Email</div>
+            <div class="contact-item-val">canalome2026@email.com</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon-wrap">📱</div>
+          <div>
+            <div class="contact-item-title">Téléphone</div>
+            <div class="contact-item-val">+228 XX XX XX XX</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="contact-form">
+        <div class="form-row">
+          <label>Nom complet</label>
+          <input type="text" id="c-name" placeholder="Kofi Mensah">
+        </div>
+        <div class="form-row">
+          <label>Email</label>
+          <input type="email" id="c-email" placeholder="ton@email.com">
+        </div>
+        <div class="form-row">
+          <label>Objet</label>
+          <select id="c-subject">
+            <option value="">— Choisir —</option>
+            <option>Inscription d'une équipe</option>
+            <option>Réservation de stand</option>
+            <option>Achat de ticket</option>
+            <option>Partenariat / Sponsoring</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Message</label>
+          <textarea id="c-msg" placeholder="Décris ta demande…"></textarea>
+        </div>
+        <button class="btn-send" onclick="sendContact()">Envoyer le message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">CAN À LOMÉ 2026</div>
+  <p>Organisé par des étudiants passionnés · Lomé, Togo</p>
+  <p>© 2026 CAN À LOMÉ — Tous droits réservés</p>
+</footer>
+
+<!-- TICKET MODAL -->
+<div class="modal-overlay" id="ticketModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('ticketModal')">✕</button>
+    <div id="ticket-form-wrap">
+      <div class="modal-title">Réserver votre place</div>
+      <div class="modal-sub" id="modal-ticket-type">Tribune Standard · 500 FCFA</div>
+      <div class="form-row">
+        <label>Nom complet</label>
+        <input type="text" id="t-name" placeholder="Votre nom">
+      </div>
+      <div class="form-row">
+        <label>Email</label>
+        <input type="email" id="t-email" placeholder="votre@email.com">
+      </div>
+      <div class="form-row">
+        <label>Téléphone</label>
+        <input type="text" id="t-phone" placeholder="+228 XX XX XX XX">
+      </div>
+      <!-- Le choix du moyen de paiement se fait sur la page FedaPay (TMoney, Moov, Carte) -->
+      <button class="btn-reserve primary" onclick="submitTicket()">Confirmer la réservation</button>
+    </div>
+    <div class="form-success" id="ticket-success">
+      <span class="success-icon">🎟️</span>
+      <strong id="ticket-id-display"></strong>
+      <p id="ticket-success-msg"></p>
+    </div>
+  </div>
+</div>
+
+<!-- STAND MODAL -->
+<div class="modal-overlay" id="standModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('standModal')">✕</button>
+    <div id="stand-form-wrap">
+      <div class="modal-title">Réserver un stand</div>
+      <div class="modal-sub" id="modal-stand-name">Stand Alimentaire A</div>
+      <div class="form-row">
+        <label>Votre nom</label>
+        <input type="text" id="s-name" placeholder="Nom complet">
+      </div>
+      <div class="form-row">
+        <label>Téléphone</label>
+        <input type="text" id="s-phone" placeholder="+228 XX XX XX XX">
+      </div>
+      <div class="form-row">
+        <label>Email</label>
+        <input type="email" id="s-email" placeholder="votre@email.com">
+      </div>
+      <button class="btn-reserve primary" onclick="submitStand()">Confirmer la réservation</button>
+    </div>
+    <div class="form-success" id="stand-success">
+      <span class="success-icon">🏪</span>
+      <strong>Stand réservé !</strong>
+      <p>Vous serez contacté par l'équipe organisatrice pour confirmer et finaliser le paiement.</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = '';  // same origin
+let currentTicketType = '', currentTicketPrice = 0, currentStandId = null;
+
+// Cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  setTimeout(() => {
+    ring.style.left = e.clientX + 'px';
+    ring.style.top = e.clientY + 'px';
+  }, 80);
+});
+
+// Toast
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// Modals
+function openTicketModal(type, price) {
+  currentTicketType = type; currentTicketPrice = price;
+  document.getElementById('modal-ticket-type').textContent = `${type} · ${price.toLocaleString()} FCFA`;
+  document.getElementById('ticket-form-wrap').style.display = 'block';
+  document.getElementById('ticket-success').style.display = 'none';
+  document.getElementById('ticketModal').classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// Load teams
+async function loadTeams() {
+  try {
+    const res = await fetch(API + '/api/teams');
+    const teams = await res.json();
+    document.getElementById('stat-teams').textContent = teams.length;
+    const grid = document.getElementById('teams-grid');
+    grid.innerHTML = teams.map(t => `
+      <div class="team-card">
+        <span class="team-flag">${t.flag}</span>
+        <div class="team-name">${t.name}</div>
+        <div class="team-group">Groupe ${t.group_name}</div>
+        <div class="team-players">${t.players} joueurs</div>
+      </div>
+    `).join('');
+  } catch(e) { console.error(e); }
+}
+
+// Load matches
+async function loadMatches() {
+  try {
+    const res = await fetch(API + '/api/matches');
+    const matches = await res.json();
+    document.getElementById('stat-matches').textContent = matches.length;
+    const phases = { 'Groupe': 'phase-g', 'Quarts': 'phase-q', 'Demi-finale': 'phase-s', 'Finale': 'phase-f' };
+    const list = document.getElementById('match-list');
+    list.innerHTML = matches.map(m => {
+      const date = new Date(m.match_date).toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'long'});
+      const scoreStr = m.score1 !== null ? `<strong class="match-score">${m.score1} - ${m.score2}</strong>` : '<span class="match-pending">à jouer</span>';
+      return `
+        <div class="match-item">
+          <div class="match-date">${date}</div>
+          <div class="match-teams">${m.team1} <span class="match-vs"> vs </span> ${m.team2}</div>
+          <div>${scoreStr}</div>
+          <div class="match-time">${m.match_time}</div>
+          <div class="match-terrain">${m.terrain}</div>
+          <span class="match-phase ${phases[m.phase] || 'phase-g'}">${m.phase}</span>
+        </div>
+      `;
+    }).join('');
+  } catch(e) { console.error(e); }
+}
+
+// Load stands
+async function loadStands() {
+  try {
+    const res = await fetch(API + '/api/stands');
+    const stands = await res.json();
+    const grid = document.getElementById('stands-grid');
+    grid.innerHTML = stands.map(s => `
+      <div class="stand-card">
+        <span class="stand-status-badge ${s.status === 'libre' ? 'libre' : 'reserve'}">
+          ${s.status === 'libre' ? '● Disponible' : '● Réservé'}
+        </span>
+        <div class="stand-name">${s.name}</div>
+        <div class="stand-desc">${s.description}</div>
+        <div class="stand-price">${s.price.toLocaleString()} <small>FCFA / jour</small></div>
+        <button class="btn-stand" onclick="openStandModal(${s.id}, '${s.name}')" ${s.status === 'reserve' ? 'disabled' : ''}>
+          ${s.status === 'libre' ? 'Réserver ce stand →' : 'Non disponible'}
+        </button>
+      </div>
+    `).join('');
+  } catch(e) { console.error(e); }
+}
+
+// Submit ticket → FedaPay redirect
+async function submitTicket() {
+  const name  = document.getElementById('t-name').value;
+  const email = document.getElementById('t-email').value;
+  const phone = document.getElementById('t-phone').value;
+  if (!name || !email || !phone) { showToast('Veuillez remplir tous les champs'); return; }
+  const btn = document.querySelector('#ticketModal .btn-reserve.primary');
+  if(btn){ btn.textContent = 'Redirection vers FedaPay…'; btn.disabled = true; }
+  try {
+    const res = await fetch(API + '/api/tickets/buy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: currentTicketType, buyer_name: name, buyer_email: email, buyer_phone: phone })
+    });
+    const data = await res.json();
+    if (data.success) {
+      if (data.payment_url) {
+        window.location.href = data.payment_url;
+      } else {
+        document.getElementById('ticket-form-wrap').style.display = 'none';
+        document.getElementById('ticket-id-display').textContent = 'Ticket #' + data.ticket_id + ' enregistré !';
+        document.getElementById('ticket-success-msg').textContent = data.message;
+        document.getElementById('ticket-success').style.display = 'block';
+      }
+    } else {
+      showToast(data.error || 'Erreur');
+      if(btn){ btn.textContent = 'Confirmer la réservation'; btn.disabled = false; }
+    }
+  } catch(e) {
+    showToast('Erreur de connexion');
+    if(btn){ btn.textContent = 'Confirmer la réservation'; btn.disabled = false; }
+  }
+}
+
+// Stand modal
+function openStandModal(id, name) {
+  currentStandId = id;
+  document.getElementById('modal-stand-name').textContent = name;
+  document.getElementById('stand-form-wrap').style.display = 'block';
+  document.getElementById('stand-success').style.display = 'none';
+  document.getElementById('standModal').classList.add('open');
+}
+async function submitStand() {
+  const name  = document.getElementById('s-name').value;
+  const phone = document.getElementById('s-phone').value;
+  const email = document.getElementById('s-email').value;
+  if (!name || !phone || !email) { showToast('Veuillez remplir tous les champs'); return; }
+  const btn = document.querySelector('#standModal .btn-reserve.primary');
+  if(btn){ btn.textContent = 'Redirection vers FedaPay…'; btn.disabled = true; }
+  try {
+    const res = await fetch(API + '/api/stands/reserve', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ stand_id: currentStandId, renter_name: name, renter_phone: phone, renter_email: email })
+    });
+    const data = await res.json();
+    if (data.success) {
+      if (data.payment_url) {
+        window.location.href = data.payment_url;
+      } else {
+        document.getElementById('stand-form-wrap').style.display = 'none';
+        document.getElementById('stand-success').style.display = 'block';
+        loadStands();
+      }
+    } else {
+      showToast(data.error || 'Erreur');
+      if(btn){ btn.textContent = 'Confirmer la réservation'; btn.disabled = false; }
+    }
+  } catch(e) {
+    showToast('Erreur de connexion');
+    if(btn){ btn.textContent = 'Confirmer la réservation'; btn.disabled = false; }
+  }
+}
+
+// Contact
+function sendContact() {
+  const name = document.getElementById('c-name').value;
+  const email = document.getElementById('c-email').value;
+  if (!name || !email) { showToast('Veuillez remplir nom et email'); return; }
+  showToast('✓ Message envoyé ! On vous répondra bientôt.');
+  document.getElementById('c-name').value = '';
+  document.getElementById('c-email').value = '';
+  document.getElementById('c-msg').value = '';
+}
+
+// Close on backdrop click
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+});
+
+// Handle FedaPay redirect return
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('status') === 'success' && urlParams.get('ticket')) {
+  showToast('🎟️ Ticket #' + urlParams.get('ticket') + ' — Paiement confirmé !');
+  history.replaceState({}, '', '/');
+} else if (urlParams.get('status') === 'success' && urlParams.get('stand')) {
+  showToast('🏪 Stand réservé et payé avec succès !');
+  history.replaceState({}, '', '/');
+} else if (urlParams.get('status') === 'failed') {
+  showToast('❌ Paiement annulé ou refusé.');
+  history.replaceState({}, '', '/');
+}
+
+// Init
+loadTeams(); loadMatches(); loadStands();
+</script>
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · CAN À LOMÉ 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">CAN À LOMÉ</div>
+    <div class="login-sub">⬥ Espace Administrateur ⬥</div>
+    <input type="text" id="l-user" placeholder="Nom d'utilisateur" value="admin">
+    <input type="password" id="l-pass" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn-login" onclick="doLogin()">Accéder au tableau de bord →</button>
+    <div class="login-error" id="login-error">Identifiants incorrects</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      CAN À LOMÉ
+      <small>⬥ Administration</small>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" onclick="showTab('overview', this)"><span class="icon">📊</span> Vue d'ensemble</div>
+      <div class="nav-item" onclick="showTab('tickets', this)"><span class="icon">🎟️</span> Tickets</div>
+      <div class="nav-item" onclick="showTab('stands', this)"><span class="icon">🏪</span> Stands</div>
+      <div class="nav-item" onclick="showTab('teams', this)"><span class="icon">⚽</span> Équipes</div>
+      <div class="nav-item" onclick="showTab('matches', this)"><span class="icon">📅</span> Matchs & Scores</div>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/" class="btn-back">← Retour au site</a>
+      <button class="btn-logout" onclick="logout()">Se déconnecter</button>
+    </div>
+  </div>
+
+  <main class="main">
+    <!-- OVERVIEW -->
+    <div class="tab-page active" id="tab-overview">
+      <div class="page-header">
+        <div class="page-title">Vue d'<em>ensemble</em></div>
+        <div class="page-sub">⬥ Tableau de bord · CAN À LOMÉ 2026</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-card-label">Tickets vendus</div>
+          <div class="stat-card-val" id="s-tickets">—</div>
+          <div class="stat-card-icon">🎟️</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Revenus confirmés (FCFA)</div>
+          <div class="stat-card-val" id="s-revenue">—</div>
+          <div class="stat-card-icon">💰</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Stands réservés</div>
+          <div class="stat-card-val" id="s-stands">—</div>
+          <div class="stat-card-icon">🏪</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Équipes inscrites</div>
+          <div class="stat-card-val" id="s-teams">—</div>
+          <div class="stat-card-icon">⚽</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">⬥ Derniers tickets enregistrés</span></div>
+        <table>
+          <thead><tr><th>ID</th><th>Acheteur</th><th>Type</th><th>Paiement</th><th>Statut</th><th>Action</th></tr></thead>
+          <tbody id="overview-tickets"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TICKETS -->
+    <div class="tab-page" id="tab-tickets">
+      <div class="page-header">
+        <div class="page-title">Gestion des <em>Tickets</em></div>
+        <div class="page-sub">⬥ Confirmer les paiements</div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">⬥ Tous les tickets</span></div>
+        <table>
+          <thead><tr><th>ID</th><th>Nom</th><th>Email</th><th>Téléphone</th><th>Type</th><th>Prix</th><th>Paiement</th><th>Statut</th><th>Action</th></tr></thead>
+          <tbody id="all-tickets"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- STANDS -->
+    <div class="tab-page" id="tab-stands">
+      <div class="page-header">
+        <div class="page-title">Gestion des <em>Stands</em></div>
+        <div class="page-sub">⬥ Voir et libérer les stands</div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">⬥ Tous les stands</span></div>
+        <table>
+          <thead><tr><th>Stand</th><th>Prix/jour</th><th>Statut</th><th>Locataire</th><th>Contact</th><th>Action</th></tr></thead>
+          <tbody id="all-stands"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TEAMS -->
+    <div class="tab-page" id="tab-teams">
+      <div class="page-header">
+        <div class="page-title">Gestion des <em>Équipes</em></div>
+        <div class="page-sub">⬥ Ajouter ou supprimer des équipes</div>
+      </div>
+      <div class="card card--spaced">
+        <div class="card-header"><span class="card-title">⬥ Ajouter une équipe</span></div>
+        <div class="card-body">
+          <div class="form-inline">
+            <input type="text" id="new-team-name" placeholder="Nom de l'équipe">
+            <input type="text" id="new-team-flag" placeholder="Emoji drapeau 🦁">
+            <input type="number" id="new-team-players" placeholder="Nb joueurs" value="12">
+            <select id="new-team-group">
+              <option value="A">Groupe A</option>
+              <option value="B">Groupe B</option>
+              <option value="C">Groupe C</option>
+              <option value="D">Groupe D</option>
+            </select>
+            <button class="btn-add" onclick="addTeam()">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">⬥ Toutes les équipes</span></div>
+        <table>
+          <thead><tr><th>Équipe</th><th>Groupe</th><th>Joueurs</th><th>Action</th></tr></thead>
+          <tbody id="all-teams"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MATCHES -->
+    <div class="tab-page" id="tab-matches">
+      <div class="page-header">
+        <div class="page-title">Matchs & <em>Scores</em></div>
+        <div class="page-sub">⬥ Mettre à jour les résultats</div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">⬥ Calendrier des matchs</span></div>
+        <table>
+          <thead><tr><th>Date</th><th>Match</th><th>Heure</th><th>Terrain</th><th>Phase</th><th>Score</th><th>Sauvegarder</th></tr></thead>
+          <tbody id="all-matches"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = '';
+let token = localStorage.getItem('can_token') || '';
+
+function paymentLabel(t) {
+  if (t.payment_status === 'paid') return 'FedaPay';
+  if (t.payment_url) return 'FedaPay (en cours)';
+  return '—';
+}
+
+if (location.protocol === 'file:') {
+  const err = document.getElementById('login-error');
+  err.textContent = 'Ouvrez http://localhost:5000/admin après avoir lancé le serveur (cd backend && python server.py).';
+  err.style.display = 'block';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+function authHeaders() {
+  return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
+}
+
+// LOGIN
+async function doLogin() {
+  const username = document.getElementById('l-user').value;
+  const password = document.getElementById('l-pass').value;
+  try {
+    const res = await fetch(API + '/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+    if (data.token) {
+      token = data.token;
+      localStorage.setItem('can_token', token);
+      showDashboard();
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+    }
+  } catch(e) {
+    const err = document.getElementById('login-error');
+    err.textContent = location.protocol === 'file:'
+      ? 'Serveur non accessible. Lancez python server.py dans backend, puis ouvrez http://localhost:5000/admin'
+      : 'Identifiants incorrects ou serveur arrêté';
+    err.style.display = 'block';
+  }
+}
+
+function logout() {
+  localStorage.removeItem('can_token');
+  token = '';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+}
+
+function showDashboard() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  loadStats(); loadOverviewTickets(); loadAllTickets(); loadStands(); loadTeams(); loadMatches();
+}
+
+// Check existing token
+if (token) {
+  fetch(API + '/api/admin/stats', { headers: authHeaders() })
+    .then(r => { if (r.ok) showDashboard(); else { localStorage.removeItem('can_token'); token = ''; } })
+    .catch(() => {});
+}
+
+// TABS
+function showTab(name, navEl) {
+  document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  if (navEl) navEl.classList.add('active');
+}
+
+// STATS
+async function loadStats() {
+  const res = await fetch(API + '/api/admin/stats', { headers: authHeaders() });
+  const d = await res.json();
+  document.getElementById('s-tickets').textContent = d.tickets_count;
+  document.getElementById('s-revenue').textContent = d.tickets_revenue.toLocaleString();
+  document.getElementById('s-stands').textContent = `${d.stands_reserved}/${d.stands_total}`;
+  document.getElementById('s-teams').textContent = d.teams_count;
+}
+
+// TICKETS
+async function loadOverviewTickets() {
+  const res = await fetch(API + '/api/admin/tickets', { headers: authHeaders() });
+  const tickets = await res.json();
+  const tbody = document.getElementById('overview-tickets');
+  tbody.innerHTML = tickets.slice(0, 5).map(t => `
+    <tr>
+      <td><strong class="text-gold">#${t.id}</strong></td>
+      <td>${t.buyer_name}</td>
+      <td>${t.type}</td>
+      <td>${paymentLabel(t)}</td>
+      <td><span class="badge badge-${t.payment_status}">${t.payment_status === 'paid' ? '✓ Payé' : '⏳ En attente'}</span></td>
+      <td>${t.payment_status === 'pending' ? `<button class="btn-sm btn-confirm" onclick="confirmTicket('${t.id}')">Confirmer</button>` : '—'}</td>
+    </tr>
+  `).join('') || '<tr><td colspan="6" class="table-empty">Aucun ticket pour l\'instant</td></tr>';
+}
+
+async function loadAllTickets() {
+  const res = await fetch(API + '/api/admin/tickets', { headers: authHeaders() });
+  const tickets = await res.json();
+  const tbody = document.getElementById('all-tickets');
+  tbody.innerHTML = tickets.map(t => `
+    <tr>
+      <td><strong class="text-gold">#${t.id}</strong></td>
+      <td>${t.buyer_name}</td>
+      <td class="text-gray-sm">${t.buyer_email}</td>
+      <td>${t.buyer_phone}</td>
+      <td>${t.type}</td>
+      <td class="text-gold-price">${Number(t.price).toLocaleString()} F</td>
+      <td>${paymentLabel(t)}</td>
+      <td><span class="badge badge-${t.payment_status}">${t.payment_status === 'paid' ? '✓ Payé' : '⏳ En attente'}</span></td>
+      <td>${t.payment_status === 'pending' ? `<button class="btn-sm btn-confirm" onclick="confirmTicket('${t.id}')">Confirmer</button>` : '✓'}</td>
+    </tr>
+  `).join('') || '<tr><td colspan="9" class="table-empty">Aucun ticket</td></tr>';
+}
+
+async function confirmTicket(id) {
+  await fetch(API + `/api/admin/tickets/${id}/confirm`, { method: 'PUT', headers: authHeaders() });
+  showToast(`✓ Ticket #${id} marqué comme payé`);
+  loadStats(); loadOverviewTickets(); loadAllTickets();
+}
+
+// STANDS
+async function loadStands() {
+  const res = await fetch(API + '/api/stands');
+  const stands = await res.json();
+  const tbody = document.getElementById('all-stands');
+  tbody.innerHTML = stands.map(s => `
+    <tr>
+      <td><strong>${s.name}</strong><br><small class="text-gray-sm">${s.description}</small></td>
+      <td class="text-gold-price">${Number(s.price).toLocaleString()} F</td>
+      <td><span class="badge badge-${s.status}">${s.status === 'libre' ? '● Disponible' : '● Réservé'}</span></td>
+      <td>${s.renter_name || '—'}</td>
+      <td class="text-gray-sm">${s.renter_phone || ''} ${s.renter_email ? '<br>' + s.renter_email : ''}</td>
+      <td>${s.status === 'reserve' ? `<button class="btn-sm btn-danger" onclick="freeStand(${s.id})">Libérer</button>` : '—'}</td>
+    </tr>
+  `).join('');
+}
+
+async function freeStand(id) {
+  if (!confirm('Libérer ce stand ?')) return;
+  await fetch(API + `/api/admin/stands/${id}/free`, { method: 'PUT', headers: authHeaders() });
+  showToast('Stand libéré'); loadStands(); loadStats();
+}
+
+// TEAMS
+async function loadTeams() {
+  const res = await fetch(API + '/api/teams');
+  const teams = await res.json();
+  const tbody = document.getElementById('all-teams');
+  tbody.innerHTML = teams.map(t => `
+    <tr>
+      <td><span class="team-flag-cell">${t.flag}</span><strong>${t.name}</strong></td>
+      <td><span class="badge badge-groupe">Groupe ${t.group_name}</span></td>
+      <td>${t.players} joueurs</td>
+      <td><button class="btn-sm btn-danger" onclick="deleteTeam(${t.id}, '${t.name}')">Supprimer</button></td>
+    </tr>
+  `).join('') || '<tr><td colspan="4" class="table-empty">Aucune équipe</td></tr>';
+}
+
+async function addTeam() {
+  const name = document.getElementById('new-team-name').value;
+  const flag = document.getElementById('new-team-flag').value || '⚽';
+  const players = document.getElementById('new-team-players').value || 12;
+  const group_name = document.getElementById('new-team-group').value;
+  if (!name) { showToast('Entrez un nom d\'équipe'); return; }
+  await fetch(API + '/api/admin/teams', {
+    method: 'POST', headers: authHeaders(),
+    body: JSON.stringify({ name, flag, players: parseInt(players), group_name })
+  });
+  document.getElementById('new-team-name').value = '';
+  document.getElementById('new-team-flag').value = '';
+  showToast(`✓ Équipe "${name}" ajoutée`);
+  loadTeams(); loadStats();
+}
+
+async function deleteTeam(id, name) {
+  if (!confirm(`Supprimer "${name}" ?`)) return;
+  await fetch(API + `/api/admin/teams/${id}`, { method: 'DELETE', headers: authHeaders() });
+  showToast(`Équipe supprimée`); loadTeams(); loadStats();
+}
+
+// MATCHES
+async function loadMatches() {
+  const res = await fetch(API + '/api/matches');
+  const matches = await res.json();
+  const phaseClass = { 'Groupe':'groupe', 'Quarts':'quarts', 'Demi-finale':'quarts', 'Finale':'finale' };
+  const tbody = document.getElementById('all-matches');
+  tbody.innerHTML = matches.map(m => {
+    const date = new Date(m.match_date).toLocaleDateString('fr-FR', {day:'numeric', month:'short'});
+    return `
+      <tr>
+        <td>${date}</td>
+        <td><strong>${m.team1}</strong> <span class="match-vs-muted">vs</span> <strong>${m.team2}</strong></td>
+        <td class="match-time-gold">${m.match_time}</td>
+        <td class="match-terrain-sm">${m.terrain}</td>
+        <td><span class="badge badge-${phaseClass[m.phase]||'groupe'}">${m.phase}</span></td>
+        <td>
+          <div class="score-inputs">
+            <input type="number" id="s1-${m.id}" value="${m.score1 ?? ''}" min="0" placeholder="—">
+            <span class="score-sep">—</span>
+            <input type="number" id="s2-${m.id}" value="${m.score2 ?? ''}" min="0" placeholder="—">
+          </div>
+        </td>
+        <td><button class="btn-sm btn-gold-sm" onclick="saveScore(${m.id})">Sauvegarder</button></td>
+      </tr>
+    `;
+  }).join('');
+}
+
+async function saveScore(id) {
+  const s1 = document.getElementById(`s1-${id}`).value;
+  const s2 = document.getElementById(`s2-${id}`).value;
+  if (s1 === '' || s2 === '') { showToast('Entrez les deux scores'); return; }
+  await fetch(API + `/api/admin/matches/${id}/score`, {
+    method: 'PUT', headers: authHeaders(),
+    body: JSON.stringify({ score1: parseInt(s1), score2: parseInt(s2) })
+  });
+  showToast('✓ Score mis à jour');
+}
+</script>
+</body>
+</html>
