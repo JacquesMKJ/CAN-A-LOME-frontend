@@ -137,6 +137,7 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 .badge-pending { background: rgba(201,168,76,0.15); color: var(--gold); }
 .badge-libre { background: rgba(27,77,46,0.3); color: #4CAF50; }
 .badge-reserve { background: rgba(192,57,43,0.2); color: #FF5555; }
+.badge-en_cours { background: rgba(201,168,76,0.15); color: var(--gold); }
 .badge-groupe { background: rgba(27,77,46,0.3); color: #4CAF50; }
 .badge-quarts { background: rgba(201,168,76,0.15); color: var(--gold); }
 .badge-finale { background: rgba(192,57,43,0.2); color: #FF5555; }
